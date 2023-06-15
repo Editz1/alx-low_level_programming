@@ -1,2 +1,2 @@
 #!/bin/bash
-cpp $CFILE > c
+export CFILE=0-main.c
