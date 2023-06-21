@@ -1,6 +1,8 @@
 #include "main.h"
 
 /**
+ * _abs - Entry
+ * @r: An input character
  * Description: This function returns absolute value of a number
  * Return: Absolute value of number r
  */
