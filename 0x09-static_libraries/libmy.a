@@ -36,6 +36,18 @@ char *_memset(char *s, char b, unsigned int n)
 	}
 	return (s);
 }
+0-putchar.c/    0           0     0     644     238       `
+#include <unistd.h>
+/**
+* _putchar - writes the character c to stdout
+* @c: The character to print
+* Return: On success 1.
+* On error, -1 is returned, and errno is set appropriately.
+*/
+int _putchar(char c)
+{
+	return (write(1, &c, 1));
+}
 0-strcat.c/     0           0     0     644     446       `
 #include "main.h"
 
@@ -440,4 +452,3 @@ int _putchar(char c)
 	return (write(1, &c, 1));
 }
 
-strchr.c/       0           0     0     644     0         `
