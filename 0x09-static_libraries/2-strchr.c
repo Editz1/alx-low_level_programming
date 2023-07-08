@@ -1,20 +1,25 @@
+#include "main.h"
+
+#include <stddef.h>
+
+
 /**
-* _atoi - changes a string to an int
-* @s: the string to be changed
-*
-* Return: the converted int
+* _strchr - Entry point
+* @s: input
+* @c: input
+* Return: Always 0 (Success)
 */
-int _atoi(char *s)
+
+char *_strchr(char *s, char c)
+
 {
-int i = 1;
-unsigned int num = 0;
-do {
-if (*s == '-')
-i *= -1;
-else if (*s >= '0' && *s <= '9')
-num = num * 10 + (*s - '0');
-else if (num > 0)
-break;
-} while (*s++);
-return (num *i);
+
+	int i = 0;
+
+	for (; s[i] >= '\0'; i++)
+	{
+		if (s[i] == c)
+			return (&s[i]);
+	}
+	return (0);
 }
