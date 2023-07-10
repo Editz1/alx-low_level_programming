@@ -1,69 +1,77 @@
-#include "main.h"
 #include <stdlib.h>
-
-int w_count(char *str, int size);
-int _strlen_recursion(char *s);
-
+#include "main.h"
 
 /**
- * **strtow - Splits a string in two words
- * @str: String
- * Return: Pointer to an array of strings
+ * count_word - helper function to count the number of words in a string
+ * @s: string to evaluate
+ *
+ * Return: number of words
  */
-char **strtow(char *str)
+int count_word(char *s)
 {
-	char *strcp, **strcon;
-	int len = 0, noWords;
+	int flag, c, w;
 
-	if (str == NULL || str[0] == 0)
-		return (NULL);
+	flag = 0;
+	w = 0;
 
-	strcp = str;
-	len = _strlen_recursion(strcp);
-	noWords = w_count(str, len);
-
-	if (noWords < 1)
-		return (NULL);
-
-	strcon = malloc(noWords + 1 * sizeof(char *));
-
-	strcon[0] = malloc(sizeof(char) * 1 + 1);
-
-	return (strcon);
-}
-
-/**
- * w_count - Count the total words in a string
- * @str: String
- * @size: length of the string
- * Return: Count of words Integer
- */
-int w_count(char *str, int size)
-{
-	int i, count = 0;
-
-	for (i = 0; str[i] != '\0'; i++)
+	for (c = 0; s[c] != '\0'; c++)
 	{
-		if (str[i] != ' ')
+		if (s[c] == ' ')
+			flag = 0;
+		else if (flag == 0)
 		{
-			while (i < size && str[i] != ' ')
-				i++;
-			count++;
+			flag = 1;
+			w++;
 		}
 	}
 
-	return (count);
+	return (w);
 }
-
-
 /**
- * _strlen_recursion - Length of a string
- * @s: char pointer
- * Return: Integer variable
+ * **strtow - splits a string into words
+ * @str: string to split
+ *
+ * Return: pointer to an array of strings (Success)
+ * or NULL (Error)
  */
-int _strlen_recursion(char *s)
+char **strtow(char *str)
 {
-	if (*s != '\0')
-		return (1 + _strlen_recursion(++s));
-	return (0);
+	char **matrix, *tmp;
+	int i, k = 0, len = 0, words, c = 0, start, end;
+
+	while (*(str + len))
+		len++;
+	words = count_word(str);
+	if (words == 0)
+		return (NULL);
+
+	matrix = (char **) malloc(sizeof(char *) * (words + 1));
+	if (matrix == NULL)
+		return (NULL);
+
+	for (i = 0; i <= len; i++)
+	{
+		if (str[i] == ' ' || str[i] == '\0')
+		{
+			if (c)
+			{
+				end = i;
+				tmp = (char *) malloc(sizeof(char) * (c + 1));
+				if (tmp == NULL)
+					return (NULL);
+				while (start < end)
+					*tmp++ = str[start++];
+				*tmp = '\0';
+				matrix[k] = tmp - c;
+				k++;
+				c = 0;
+			}
+		}
+		else if (c++ == 0)
+			start = i;
+	}
+
+	matrix[k] = NULL;
+
+	return (matrix);
 }
